@@ -8625,7 +8625,10 @@ spec:
                         type: string
                     type: object
                   logging:
-                    description: The configuration of Logging trait
+                    description: |-
+                      The configuration of Logging trait.
+
+                      Deprecated: no longer in use.
                     properties:
                       color:
                         description: Colorize the log output
@@ -8661,7 +8664,10 @@ spec:
                         type: string
                     type: object
                   master:
-                    description: The configuration of Master trait
+                    description: |-
+                      The configuration of Master trait.
+
+                      Deprecated: no longer in use.
                     properties:
                       auto:
                         description: Enables automatic configuration of the trait.
@@ -9219,7 +9225,10 @@ spec:
                     - configuration
                     type: object
                   telemetry:
-                    description: The configuration of Telemetry trait
+                    description: |-
+                      The configuration of Telemetry trait.
+
+                      Deprecated: no longer in use.
                     properties:
                       auto:
                         description: Enables automatic configuration of the trait,
@@ -11007,7 +11016,10 @@ spec:
                         type: string
                     type: object
                   logging:
-                    description: The configuration of Logging trait
+                    description: |-
+                      The configuration of Logging trait.
+
+                      Deprecated: no longer in use.
                     properties:
                       color:
                         description: Colorize the log output
@@ -11043,7 +11055,10 @@ spec:
                         type: string
                     type: object
                   master:
-                    description: The configuration of Master trait
+                    description: |-
+                      The configuration of Master trait.
+
+                      Deprecated: no longer in use.
                     properties:
                       auto:
                         description: Enables automatic configuration of the trait.
@@ -11601,7 +11616,10 @@ spec:
                     - configuration
                     type: object
                   telemetry:
-                    description: The configuration of Telemetry trait
+                    description: |-
+                      The configuration of Telemetry trait.
+
+                      Deprecated: no longer in use.
                     properties:
                       auto:
                         description: Enables automatic configuration of the trait,
