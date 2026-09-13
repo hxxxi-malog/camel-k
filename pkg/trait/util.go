@@ -330,19 +330,28 @@ func ExtractAndMaybeDeleteTraits(c client.Client, annotations map[string]string,
 	traitsPlainParams := []string{}
 	for k, v := range annotations {
 		//nolint:staticcheck
-		if strings.HasPrefix(k, v1.TraitAnnotationPrefix) {
-			key := strings.ReplaceAll(k, v1.TraitAnnotationPrefix, "")
-			traitID := strings.Split(key, ".")[0]
-			if err := ValidateTrait(catalog, traitID); err != nil {
-				return nil, err
-			}
-			traitArrayParams := extractAsArray(v)
-			for _, param := range traitArrayParams {
-				traitsPlainParams = append(traitsPlainParams, fmt.Sprintf("%s=%s", key, param))
-			}
+		if !strings.HasPrefix(k, v1.TraitAnnotationPrefix) {
+			continue
+		}
+		//nolint:staticcheck // Support legacy trait annotations.
+		key := strings.ReplaceAll(k, v1.TraitAnnotationPrefix, "")
+		traitID := strings.Split(key, ".")[0]
+		if isRemovedTrait(traitID) {
 			if del {
 				delete(annotations, k)
 			}
+
+			continue
+		}
+		if err := ValidateTrait(catalog, traitID); err != nil {
+			return nil, err
+		}
+		traitArrayParams := extractAsArray(v)
+		for _, param := range traitArrayParams {
+			traitsPlainParams = append(traitsPlainParams, fmt.Sprintf("%s=%s", key, param))
+		}
+		if del {
+			delete(annotations, k)
 		}
 	}
 	if len(traitsPlainParams) == 0 {
@@ -354,6 +363,15 @@ func ExtractAndMaybeDeleteTraits(c client.Client, annotations map[string]string,
 	}
 
 	return &traits, nil
+}
+
+func isRemovedTrait(id string) bool {
+	switch id {
+	case "logging", "master", "telemetry":
+		return true
+	default:
+		return false
+	}
 }
 
 // extractAsArray can detect if the value is an array representation as ["prop1=1", "prop2=2"] and
